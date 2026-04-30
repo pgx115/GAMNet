@@ -1,1 +1,1 @@
-# GAMNet
+# The Code of GAMNet
