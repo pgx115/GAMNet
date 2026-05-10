@@ -22,31 +22,6 @@ class MBEUpBlock(nn.Module):
         super(MBEUpBlock, self).__init__()
         self.up = nn.ConvTranspose2d(in_channels, skip_channels, kernel_size=2, stride=2)
 
-        self.sculpting_gate = nn.Sequential(
-            nn.Conv2d(skip_channels * 2, skip_channels, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(skip_channels),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(skip_channels, skip_channels, kernel_size=1, bias=False),
-            nn.Sigmoid()
-        )
-
-        self.boundary_extractor = nn.Sequential(
-            nn.Conv2d(skip_channels, skip_channels // 2, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(skip_channels // 2),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(skip_channels // 2, 1, kernel_size=1, bias=False),
-            nn.Sigmoid()
-        )
-
-        self.conv = nn.Sequential(
-            nn.Conv2d(skip_channels * 2, out_channels, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(inplace=True)
-        )
-
     def forward(self, x, skip):
 
         return out
